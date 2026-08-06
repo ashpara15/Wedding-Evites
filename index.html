@@ -63,6 +63,9 @@ h1,h2,h3{font-weight:500;color:var(--wine)}
 .event-day{font:500 8px var(--sans);letter-spacing:1px;color:#9d8d8d;text-transform:uppercase;margin:4px 0 13px}
 .pill{display:inline-block;padding:4px 10px;border-radius:12px;background:#f3e1dc;color:var(--wine);font:600 7px var(--sans);letter-spacing:1px;text-transform:uppercase;margin:5px 0}
 .event-name{font-size:17px;color:#72545a}
+.event-description{
+    font-size:0.8em;
+}  
 .event-time{font:400 9px var(--sans);color:#a18f90;margin:3px 0 9px}
 .card-line{width:45px;height:1px;background:#ead2c9;margin:10px auto}
 .small-btn{border:1px solid #e7d5ce;background:#fff8f4;color:#8b6067;border-radius:15px;padding:8px 13px;font:500 8px var(--sans);letter-spacing:.6px;text-transform:uppercase}
@@ -187,7 +190,14 @@ function startMusic(){
 function toggleMusic(){
  if(music.paused){startMusic()}else{music.pause();musicOn=false;musicBtn.textContent="♫ MUSIC OFF"}
 }
-function openInvitation(){startMusic();go("welcome")}
+function openInvitation() {
+    startMusic();
+    go("welcome");
+
+    setTimeout(() => {
+        launchGlitter();
+    }, 150);
+}
 function go(id){
  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
  const target=document.getElementById(id); if(target){target.classList.add("active");target.scrollTop=0}
