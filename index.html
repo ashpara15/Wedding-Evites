@@ -900,13 +900,12 @@
         document.getElementById('rsvp-link').href = RSVP_URL;
 
 
-        // Generate QR Codes dynamically from URLs
-
-        new QRCode(document.getElementById("qr-tirupati"), { text: MAP_URLS.tirupati, width: 110, height: 110 });
-
-        new QRCode(document.getElementById("qr-chennai"), { text: MAP_URLS.chennai, width: 110, height: 110 });
-
-        new QRCode(document.getElementById("qr-bengaluru"), { text: MAP_URLS.bengaluru, width: 110, height: 110 });
+        // Generate QR codes only when the external library loads successfully.
+        if (typeof QRCode !== "undefined") {
+            new QRCode(document.getElementById("qr-tirupati"), { text: MAP_URLS.tirupati, width: 110, height: 110 });
+            new QRCode(document.getElementById("qr-chennai"), { text: MAP_URLS.chennai, width: 110, height: 110 });
+            new QRCode(document.getElementById("qr-bengaluru"), { text: MAP_URLS.bengaluru, width: 110, height: 110 });
+        }
 
     });
 
@@ -1010,13 +1009,14 @@ END:VCALENDAR`;
 
         link.href = window.URL.createObjectURL(blob);
 
-        link.setAttribute('download', ${title.replace(/\s+/g, '_')}.ics);
+        link.setAttribute('download', title.replace(/\s+/g, '_') + '.ics');
 
         document.body.appendChild(link);
 
         link.click();
 
         document.body.removeChild(link);
+        window.URL.revokeObjectURL(link.href);
 
     }
 
