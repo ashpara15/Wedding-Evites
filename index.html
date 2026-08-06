@@ -114,7 +114,7 @@ h1,h2,h3{font-weight:500;color:var(--wine)}
       </div>
     </div>
     <button class="secondary" onclick="go('menu')">Explore Celebration →</button>
-    <div class="footer-note">♥ August 23, 2026</div>
+    <div class="footer-note">♥ August 22 - 27, 2026</div>
   </div>
 </section>
 
@@ -199,7 +199,7 @@ function downloadICS(title,startISO,endISO,location){
  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=title.replace(/\s+/g,"_")+".ics";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
 }
 function updateCountdown(){
- const target=new Date("2026-08-23T09:00:00+05:30").getTime();
+ const target=new Date("2026-08-22T18:00:00+05:30").getTime();
  let d=Math.max(0,target-Date.now());
  document.getElementById("days").textContent=Math.floor(d/86400000);
  document.getElementById("hours").textContent=Math.floor(d/3600000)%24;
