@@ -1,542 +1,1028 @@
+
+
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title>Ashwin & Harshini — Wedding Invitation</title>
+
     <!-- Elegant Serif Typography -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
     <!-- QR Code Generator Library -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
+
     <style>
+
         :root {
+
             --bg-ivory: #FDFBF7;
+
             --card-pink: #F7EBE8;
+
             --sage-green: #7D8C7C;
+
             --wine-red: #6B2D39;
+
             --text-dark: #332B2C;
+
             --font-serif: 'Cormorant Garamond', Georgia, serif;
+
             --font-sans: 'Montserrat', sans-serif;
+
         }
+
 
         * {
+
             box-sizing: border-box;
+
             margin: 0;
+
             padding: 0;
+
             -webkit-tap-highlight-color: transparent;
+
         }
+
 
         body {
+
             background-color: var(--bg-ivory);
+
             color: var(--text-dark);
+
             font-family: var(--font-serif);
+
             min-height: 100vh;
+
             display: flex;
+
             justify-content: center;
+
             align-items: center;
+
             overflow-x: hidden;
+
         }
+
 
         /* Phone Frame Wrapper */
+
         .app-container {
+
             width: 100%;
+
             max-width: 430px;
+
             min-height: 100vh;
+
             background: var(--bg-ivory);
+
             position: relative;
+
             box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+
             display: flex;
+
             flex-direction: column;
+
             overflow: hidden;
+
         }
+
 
         /* SVG Botanical Background Accent */
+
         .botanical-bg {
+
             position: absolute;
+
             top: 0;
+
             left: 0;
+
             width: 100%;
+
             height: 100%;
+
             pointer-events: none;
+
             opacity: 0.15;
+
             z-index: 1;
+
         }
+
 
         /* Screens Management */
+
         .screen {
+
             position: absolute;
+
             inset: 0;
+
             display: flex;
+
             flex-direction: column;
+
             align-items: center;
+
             justify-content: center;
+
             padding: 2rem 1.5rem;
+
             opacity: 0;
+
             pointer-events: none;
+
             transition: opacity 0.8s ease, transform 0.8s ease;
+
             transform: translateY(20px);
+
             z-index: 2;
+
             overflow-y: auto;
+
         }
+
 
         .screen.active {
+
             opacity: 1;
+
             pointer-events: auto;
+
             transform: translateY(0);
+
         }
+
 
         /* Typography & Decor */
+
         h1, h2, h3 {
+
             color: var(--wine-red);
+
             font-weight: 400;
+
             text-align: center;
+
         }
+
 
         h1 {
+
             font-size: 2.2rem;
+
             line-height: 1.2;
+
             margin-bottom: 0.5rem;
+
         }
+
 
         h2 {
+
             font-size: 1.6rem;
+
             margin-bottom: 1rem;
+
         }
+
 
         p {
+
             font-size: 1.05rem;
+
             line-height: 1.5;
+
             text-align: center;
+
             color: var(--text-dark);
+
         }
+
 
         .subtitle {
+
             font-family: var(--font-sans);
+
             font-size: 0.75rem;
+
             letter-spacing: 2px;
+
             text-transform: uppercase;
+
             color: var(--sage-green);
+
             margin-bottom: 1rem;
+
         }
+
 
         .divider {
+
             width: 60px;
+
             height: 1px;
+
             background-color: var(--wine-red);
+
             opacity: 0.3;
+
             margin: 1.2rem auto;
+
         }
+
 
         /* Buttons */
+
         .btn {
+
             background-color: var(--card-pink);
+
             color: var(--wine-red);
+
             border: 1px solid rgba(107, 45, 57, 0.2);
+
             padding: 0.8rem 1.8rem;
+
             font-family: var(--font-sans);
+
             font-size: 0.8rem;
+
             letter-spacing: 1.5px;
+
             text-transform: uppercase;
+
             border-radius: 30px;
+
             cursor: pointer;
+
             transition: all 0.3s ease;
+
             margin-top: 1rem;
+
             display: inline-flex;
+
             align-items: center;
+
             gap: 8px;
+
             text-decoration: none;
+
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+
         }
+
 
         .btn:active {
+
             transform: scale(0.97);
+
             background-color: var(--wine-red);
+
             color: #fff;
+
         }
+
 
         /* SCREEN 1: Envelope / Opening */
+
         .envelope-wrapper {
+
             width: 280px;
+
             height: 380px;
+
             background: var(--card-pink);
+
             border: 1px solid rgba(125, 140, 124, 0.3);
+
             border-radius: 8px;
+
             display: flex;
+
             flex-direction: column;
+
             align-items: center;
+
             justify-content: center;
+
             padding: 2rem;
+
             box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+
             position: relative;
+
             transform-style: preserve-3d;
+
             transition: transform 1s ease, opacity 0.8s ease;
+
         }
+
 
         .envelope-wrapper.open {
+
             transform: scale(1.05) rotateY(180deg);
+
             opacity: 0;
+
         }
+
 
         /* SCREEN 3: Menu List */
+
         .menu-list {
+
             width: 100%;
+
             display: flex;
+
             flex-direction: column;
+
             gap: 12px;
+
             margin-top: 1.5rem;
+
         }
+
 
         .menu-item {
+
             background: #fff;
+
             border: 1px solid rgba(125, 140, 124, 0.2);
+
             padding: 1.1rem 1.5rem;
+
             border-radius: 12px;
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             cursor: pointer;
+
             transition: all 0.3s ease;
+
         }
+
 
         .menu-item:active {
+
             transform: translateX(4px);
+
             border-color: var(--wine-red);
+
         }
+
 
         .menu-item span {
+
             font-size: 1.2rem;
+
             color: var(--wine-red);
+
         }
+
 
         .menu-item svg {
+
             width: 16px;
+
             height: 16px;
+
             fill: var(--sage-green);
+
         }
+
 
         /* Content Cards (Events / Locations) */
+
         .card {
+
             background: #fff;
+
             border: 1px solid rgba(125, 140, 124, 0.2);
+
             border-radius: 12px;
+
             padding: 1.5rem;
+
             width: 100%;
+
             margin-bottom: 1.2rem;
+
             box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+
             text-align: center;
+
         }
+
 
         .event-time {
+
             font-family: var(--font-sans);
+
             font-size: 0.85rem;
+
             color: var(--sage-green);
+
             margin-top: 4px;
+
         }
+
 
         .date-badge {
+
             font-size: 1.8rem;
+
             color: var(--wine-red);
+
             font-weight: 300;
+
             line-height: 1;
+
         }
+
 
         .qr-container {
+
             display: flex;
+
             justify-content: center;
+
             margin: 1rem 0;
+
         }
+
 
         .qr-container img, .qr-container canvas {
+
             padding: 8px;
+
             background: #fff;
+
             border: 1px solid rgba(0,0,0,0.08);
+
             border-radius: 8px;
+
         }
+
 
         /* Bottom Sticky Navigation */
+
         .nav-back {
+
             position: absolute;
+
             bottom: 20px;
+
             left: 50%;
+
             transform: translateX(-50%);
+
             z-index: 10;
+
             background: rgba(253, 251, 247, 0.9);
+
             backdrop-filter: blur(8px);
+
             border: 1px solid rgba(125, 140, 124, 0.3);
+
             border-radius: 20px;
+
             padding: 0.5rem 1.2rem;
+
             font-family: var(--font-sans);
+
             font-size: 0.75rem;
+
             letter-spacing: 1px;
+
             color: var(--wine-red);
+
             cursor: pointer;
+
             display: none;
+
             align-items: center;
+
             gap: 6px;
+
         }
 
+
         .nav-back.visible {
+
             display: flex;
+
         }
+
     </style>
+
 </head>
+
 <body>
+
 
 <div class="app-container">
 
+
     <!-- Botanical Background Motif -->
+
     <svg class="botanical-bg" viewBox="0 0 100 100" preserveAspectRatio="none">
+
         <path d="M0,0 C30,40 10,70 0,100 C40,90 70,80 100,100 C90,60 80,30 100,0 C60,10 30,10 0,0 Z" fill="var(--sage-green)" />
+
     </svg>
 
+
     <!-- SCREEN 1: COVER -->
+
     <div class="screen active" id="screen-cover">
+
         <div class="envelope-wrapper" id="envelope">
+
             <div class="subtitle">Invitation</div>
+
             <h1>Ashwin<br>&amp;<br>Harshini</h1>
+
             <div class="divider"></div>
+
             <p style="font-style: italic; font-size: 0.95rem; color: #666;">Something beautiful is waiting to be discovered…</p>
+
             <button class="btn" onclick="openInvitation()">Open Invitation</button>
+
         </div>
+
     </div>
+
 
     <!-- SCREEN 2: WELCOME REVEAL -->
+
     <div class="screen" id="screen-reveal">
+
         <div class="subtitle">Together with their families</div>
+
         <h1>Ashwin &amp; Harshini</h1>
+
         <p style="margin-top: 0.5rem;">joyfully invite you to celebrate their wedding and reception festivities.</p>
+
         <div class="divider"></div>
+
         <p style="font-style: italic; font-size: 0.9rem; color: var(--sage-green);">"As we begin this new chapter together, we invite you to celebrate the moments that matter most."</p>
+
         <button class="btn" onclick="navigateTo('screen-menu')">Explore Celebration</button>
+
     </div>
+
 
     <!-- SCREEN 3: INTERACTIVE MENU -->
+
     <div class="screen" id="screen-menu">
+
         <div class="subtitle">The Celebrations</div>
+
         <h2>Join Our Journey</h2>
+
         <div class="menu-list">
+
             <div class="menu-item" onclick="navigateTo('screen-tirupati')">
+
                 <span>🌸 Tirupati Wedding</span>
+
                 <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+
             </div>
+
             <div class="menu-item" onclick="navigateTo('screen-chennai')">
+
                 <span>🥂 Chennai Reception</span>
+
                 <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+
             </div>
+
             <div class="menu-item" onclick="navigateTo('screen-bengaluru')">
+
                 <span>✨ Bengaluru Reception</span>
+
                 <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+
             </div>
+
             <div class="menu-item" onclick="navigateTo('screen-findus')">
+
                 <span>📍 Find Us &amp; Maps</span>
+
                 <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+
             </div>
+
             <div class="menu-item" onclick="navigateTo('screen-rsvp')">
+
                 <span>💌 RSVP</span>
+
                 <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+
             </div>
+
         </div>
+
     </div>
+
 
     <!-- SCREEN: TIRUPATI -->
+
     <div class="screen" id="screen-tirupati">
+
         <div class="subtitle">Tirupati Wedding</div>
+
         
+
         <div class="card">
+
             <div class="date-badge">22</div>
+
             <div class="subtitle" style="margin-bottom: 0.5rem;">August 2026, Saturday</div>
+
             <p><strong>Maappillai Azhaippu</strong></p>
+
             <div class="event-time">6:00 PM – 7:00 PM</div>
+
             <div class="divider"></div>
+
             <p><strong>Varaverpu</strong></p>
+
             <div class="event-time">7:00 PM – 9:00 PM</div>
+
         </div>
 
+
         <div class="card">
+
             <div class="date-badge">23</div>
+
             <div class="subtitle" style="margin-bottom: 0.5rem;">August 2026, Sunday</div>
+
             <p><strong>Muhurtham</strong></p>
+
             <div class="event-time">9:00 AM – 10:00 AM</div>
+
             <div class="divider"></div>
+
             <p><strong>Lunch</strong></p>
+
             <div class="event-time">12:00 PM onwards</div>
+
         </div>
 
+
         <div class="card">
+
             <p><strong>Venue</strong></p>
+
             <p style="font-size: 0.95rem; margin-top: 4px;">Sri Raghavendra Mutt Mandapam<br>Thirumala (Ring Road), Tirupati</p>
+
             <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 8px;">
+
                 <button class="btn" onclick="openMap('tirupati')">📍 Directions</button>
+
                 <button class="btn" onclick="downloadICS('Tirupati Wedding', '2026-08-22T18:00:00', '2026-08-23T14:00:00', 'Sri Raghavendra Mutt Mandapam, Tirupati')">📅 Add to Calendar</button>
+
             </div>
+
         </div>
+
     </div>
+
 
     <!-- SCREEN: CHENNAI -->
+
     <div class="screen" id="screen-chennai">
+
         <div class="subtitle">Chennai Reception</div>
+
         
+
         <div class="card">
+
             <div class="date-badge">25</div>
+
             <div class="subtitle" style="margin-bottom: 0.5rem;">August 2026, Tuesday</div>
+
             <p><strong>Chennai Reception</strong></p>
+
             <div class="event-time">7:00 PM onwards</div>
+
             <div class="divider"></div>
+
             <p><strong>Venue</strong></p>
+
             <p style="font-size: 0.95rem; margin-top: 4px;">Madras Race Club<br>Guindy, Chennai</p>
+
             
+
             <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 8px;">
+
                 <button class="btn" onclick="openMap('chennai')">📍 Directions</button>
+
                 <button class="btn" onclick="downloadICS('Chennai Reception', '2026-08-25T19:00:00', '2026-08-25T22:00:00', 'Madras Race Club, Guindy, Chennai')">📅 Add to Calendar</button>
+
             </div>
+
         </div>
+
     </div>
+
 
     <!-- SCREEN: BENGALURU -->
+
     <div class="screen" id="screen-bengaluru">
+
         <div class="subtitle">Bengaluru Reception</div>
+
         
+
         <div class="card">
+
             <div class="date-badge">27</div>
+
             <div class="subtitle" style="margin-bottom: 0.5rem;">August 2026, Thursday</div>
+
             <p><strong>Bengaluru Reception</strong></p>
+
             <div class="event-time">7:30 PM onwards</div>
+
             <div class="divider"></div>
+
             <p><strong>Venue</strong></p>
+
             <p style="font-size: 0.95rem; margin-top: 4px;">Taj Vivanta<br>Bengaluru</p>
 
+
             <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 8px;">
+
                 <button class="btn" onclick="openMap('bengaluru')">📍 Directions</button>
+
                 <button class="btn" onclick="downloadICS('Bengaluru Reception', '2026-08-27T19:30:00', '2026-08-27T22:30:00', 'Taj Vivanta, Bengaluru')">📅 Add to Calendar</button>
+
             </div>
+
         </div>
+
     </div>
+
 
     <!-- SCREEN: FIND US (MAPS & QR CODES) -->
+
     <div class="screen" id="screen-findus">
+
         <div class="subtitle">Locations &amp; Directions</div>
+
         
+
         <div class="card">
+
             <p><strong>Tirupati Venue</strong></p>
+
             <div id="qr-tirupati" class="qr-container"></div>
+
             <button class="btn" onclick="openMap('tirupati')">Get Directions</button>
+
         </div>
 
+
         <div class="card">
+
             <p><strong>Chennai Venue</strong></p>
+
             <div id="qr-chennai" class="qr-container"></div>
+
             <button class="btn" onclick="openMap('chennai')">Get Directions</button>
+
         </div>
 
+
         <div class="card">
+
             <p><strong>Bengaluru Venue</strong></p>
+
             <div id="qr-bengaluru" class="qr-container"></div>
+
             <button class="btn" onclick="openMap('bengaluru')">Get Directions</button>
+
         </div>
+
     </div>
+
 
     <!-- SCREEN: RSVP -->
+
     <div class="screen" id="screen-rsvp">
+
         <div class="subtitle">Respond</div>
+
         <h2>RSVP</h2>
+
         <p>We look forward to celebrating with you.</p>
+
         <div class="divider"></div>
+
         <a id="rsvp-link" href="#" target="_blank" class="btn" style="padding: 1rem 2.5rem; font-size: 0.9rem;">Confirm Attendance</a>
+
         
+
         <div style="margin-top: 3rem;">
+
             <p style="font-style: italic; font-size: 0.95rem;">"We can't wait to celebrate with you."</p>
+
             <p style="margin-top: 0.5rem; color: var(--wine-red); font-size: 1.2rem;">Ashwin &amp; Harshini</p>
+
         </div>
+
     </div>
 
+
     <!-- STICKY BACK NAVIGATION -->
+
     <button class="nav-back" id="back-btn" onclick="navigateTo('screen-menu')">
+
         ← Return to Menu
+
     </button>
+
 
 </div>
 
+
 <script>
+
     // Configurable URLs
+
     const MAP_URLS = {
+
         tirupati: "https://maps.app.goo.gl/MUJz4PQTpp4xwYZt9",
+
         chennai: "https://maps.app.goo.gl/t5uzpcRbdmhs6Wkv8",
+
         bengaluru: "https://maps.app.goo.gl/EnJYfwc5Z2tvc5aq7"
+
     };
+
 
     const RSVP_URL = "https://forms.google.com"; // Replace with your exact RSVP link
 
+
     // Initialize Links & QR Codes
+
     document.addEventListener("DOMContentLoaded", () => {
+
         document.getElementById('rsvp-link').href = RSVP_URL;
 
+
         // Generate QR Codes dynamically from URLs
+
         new QRCode(document.getElementById("qr-tirupati"), { text: MAP_URLS.tirupati, width: 110, height: 110 });
+
         new QRCode(document.getElementById("qr-chennai"), { text: MAP_URLS.chennai, width: 110, height: 110 });
+
         new QRCode(document.getElementById("qr-bengaluru"), { text: MAP_URLS.bengaluru, width: 110, height: 110 });
+
     });
 
+
     // Screen Navigation Engine
+
     function navigateTo(screenId) {
+
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+
         const targetScreen = document.getElementById(screenId);
+
         if (targetScreen) {
+
             targetScreen.classList.add('active');
+
             targetScreen.scrollTop = 0;
+
         }
+
 
         const backBtn = document.getElementById('back-btn');
+
         if (screenId !== 'screen-cover' && screenId !== 'screen-reveal' && screenId !== 'screen-menu') {
+
             backBtn.classList.add('visible');
+
         } else {
+
             backBtn.classList.remove('visible');
+
         }
+
     }
+
 
     // Opening Envelope Interaction
+
     function openInvitation() {
+
         const env = document.getElementById('envelope');
+
         env.classList.add('open');
+
         setTimeout(() => {
+
             navigateTo('screen-reveal');
+
         }, 600);
+
     }
+
 
     // Open External Maps
+
     function openMap(locationKey) {
+
         if (MAP_URLS[locationKey]) {
+
             window.open(MAP_URLS[locationKey], '_blank');
+
         }
+
     }
+
 
     // Dynamic .ics Calendar File Generation
+
     function downloadICS(title, startISO, endISO, location) {
+
         const icsData = 
+
 `BEGIN:VCALENDAR
+
 VERSION:2.0
+
 PRODID:-//Ashwin & Harshini Digital Invitation//EN
+
 BEGIN:VEVENT
+
 SUMMARY:${title}
+
 DTSTART:${startISO.replace(/[-:]/g, "")}
+
 DTEND:${endISO.replace(/[-:]/g, "")}
+
 LOCATION:${location}
+
 DESCRIPTION:Wedding celebration for Ashwin & Harshini.
+
 STATUS:CONFIRMED
+
 END:VEVENT
+
 END:VCALENDAR`;
 
+
         const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+
         const link = document.createElement('a');
+
         link.href = window.URL.createObjectURL(blob);
-        link.setAttribute('download', title.replace(/\s+/g, '_') + '.ics');
+
+        link.setAttribute('download', ${title.replace(/\s+/g, '_')}.ics);
+
         document.body.appendChild(link);
+
         link.click();
+
         document.body.removeChild(link);
+
     }
+
 </script>
 
+
 </body>
+
 </html>
